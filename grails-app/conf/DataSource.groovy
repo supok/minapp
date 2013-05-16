@@ -22,7 +22,7 @@ environments {
             driverClassName = "com.mysql.jdbc.Driver"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             logSql = false
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            //dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
         }
 
     }

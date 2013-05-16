@@ -79,48 +79,57 @@ class RequirementService {
         extension.save();
 
         /* Add ExtensionOrder for current Requirement */
-        List<ExtensionOrder> orders = ExtensionOrder.findAllByRequirement(requirement,[sort:"position", order: "asc"])
-
-        ExtensionOrder extensionOrder = new ExtensionOrder()
-        extensionOrder.extension = extension
-        extensionOrder.requirement = requirement
-        if (orders) {
-            extensionOrder.position = orders.last().position + 1
-        } else {
-            extensionOrder.position = 1
-        }
-        extensionOrder.save()
+        createExtensionOrder(requirement, extension)
 
         if (checkedSteps == null || checkedSteps.size() == 0) {
-            ExtensionRelationship rel = new ExtensionRelationship();
-            rel.requirement = requirement;
-            rel.extension = extension;
-            rel.save();
+
+            createExtensionRelationship(requirement, extension)
+
+            /* Check if current extension is a step of any other extension and add an ExtensionOrder for it */
+            List<Step> steps = Step.findAllByRequirement(requirement)
+            steps.each {
+                createExtensionOrder(it.sequence, extension)
+            }
+
         } else {
             for (stepId in checkedSteps) {
 
                 Step step = Step.findById(new Long(stepId));
 
-                /* Add ExtensionOrder for step Requirement */
-                List<ExtensionOrder> stepOrders = ExtensionOrder.findAllByRequirement(step.requirement,[sort:"position", order: "asc"])
-
-                ExtensionOrder stepExtensionOrder = new ExtensionOrder()
-                stepExtensionOrder.extension = extension
-                stepExtensionOrder.requirement = step.requirement
-                if (stepOrders) {
-                    stepExtensionOrder.position = stepOrders.last().position + 1
-                } else {
-                    stepExtensionOrder.position = 1
-                }
-                stepExtensionOrder.save()
-
                 /* Add ext relationship */
-                ExtensionRelationship rel = new ExtensionRelationship();
-                rel.requirement = step.requirement;
-                rel.extension = extension;
-                rel.save();
+                createExtensionRelationship(step.requirement, extension)
+
+                /* Add ExtensionOrder for step Requirement */
+                createExtensionOrder(step.requirement, extension)
+
+                /* Check if current extension is a step of any other extension and add an ExtensionOrder for it */
+                List<Step> steps = Step.findAllByRequirement(step.requirement)
+                steps.each {
+                    createExtensionOrder(it.sequence, extension)
+                }
+
             }
         }
+    }
+
+    private void createExtensionRelationship(Requirement requirement, Extension extension){
+        ExtensionRelationship rel = new ExtensionRelationship();
+        rel.requirement = requirement;
+        rel.extension = extension;
+        rel.save();
+    }
+
+    private void createExtensionOrder(Requirement requirement, Extension extension){
+        ExtensionOrder extensionOrder = new ExtensionOrder()
+        extensionOrder.requirement = requirement
+        extensionOrder.extension = extension
+        ExtensionOrder order = ExtensionOrder.findByRequirement(requirement,[sort:"position", order: "desc"])
+        if (order) {
+            extensionOrder.position = order.position + 1
+        } else {
+            extensionOrder.position = 1
+        }
+        extensionOrder.save()
     }
 
     public void removeStep(Long id, Long extensionId){
