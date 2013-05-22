@@ -178,8 +178,7 @@
 <r:script>
     $(document).ready(function(){
 		
-		document.getElementById('add-main-path-step').focus();
-		
+
         $('.form-add-extension').submit(function() {
             var selectedSteps = [];
             $('.step-select').each(function() {
@@ -250,7 +249,9 @@
             $(extension).find("input").focus();
         });
 
-        $(".child-steps-tooltip").tooltip({"placement":"top"})
+        $(".child-steps-tooltip").tooltip({"placement":"top"});
+		
+		$('#add-main-path-step').focus();
 
     });
 </r:script>
