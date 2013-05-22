@@ -16,13 +16,13 @@ environments {
         println "USING DEVELOPEMENT DATABASE min"
 
         dataSource {
-            url = "jdbc:mysql://localhost/minapp"
-            username = "root"
-            password = ""
-            driverClassName = "com.mysql.jdbc.Driver"
-            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-            logSql = false
-            //dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+//            url = "jdbc:mysql://localhost/minapp"
+//            username = "root"
+//            password = ""
+//            driverClassName = "com.mysql.jdbc.Driver"
+//            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+//            logSql = false
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
         }
 
     }

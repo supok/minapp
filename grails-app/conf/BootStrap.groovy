@@ -25,7 +25,7 @@ class BootStrap {
 
             println "LOADING DEV DATABASE"
 
-            //new DomainLoader().load()
+            new DomainLoader().load()
 
         }
 
