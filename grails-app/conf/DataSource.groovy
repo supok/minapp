@@ -14,7 +14,7 @@ environments {
     development {
 
         dataSource {
-            if (!System.getProperty('mysqldb')) {
+            if (System.getProperty('mysqldb')) {
                 println "USING MYSQL DEVELOPEMENT DATABASE minapp"
 
                 url = "jdbc:mysql://localhost/minapp"

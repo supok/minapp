@@ -21,7 +21,7 @@ class BootStrap {
             /*
              *  Development
              */
-            if (!System.getProperty('mysqldb')) {
+            if (System.getProperty('mysqldb')) {
                 println "LOADING DEVELOPEMENT MYSQL DATABASE"
 //                new DomainLoader().load()
             }else{
