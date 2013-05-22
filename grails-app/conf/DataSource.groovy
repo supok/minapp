@@ -13,16 +13,23 @@ hibernate {
 environments {
     development {
 
-        println "USING DEVELOPEMENT DATABASE min"
-
         dataSource {
-//            url = "jdbc:mysql://localhost/minapp"
-//            username = "root"
-//            password = ""
-//            driverClassName = "com.mysql.jdbc.Driver"
-//            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-//            logSql = false
-            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            if (!System.getProperty('mysqldb')) {
+                println "USING MYSQL DEVELOPEMENT DATABASE minapp"
+
+                url = "jdbc:mysql://localhost/minapp"
+                username = "root"
+                password = ""
+                driverClassName = "com.mysql.jdbc.Driver"
+                dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+                logSql = false
+                dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            }else{
+                println "USING H2 DEVELOPEMENT DATABASE"
+                // Comment the following line if you do not want to recreate database
+                // every time server starts up
+                dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            }
         }
 
     }

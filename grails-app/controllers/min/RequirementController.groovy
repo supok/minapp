@@ -155,4 +155,14 @@ class RequirementController {
         render map as JSON
     }
 
+    def upload() {
+        HashMap json = ['success':true];
+        if(params.qqfile) {
+//            Photo photo = uploadFile(params.qqfile);
+//            json.put('photoId',photo.id);
+//            json.put('photoUrl',photo.location + '/' + photo.fileNameForSize(Photo.PhotoSize.THUMBNAIL));
+        }
+        return render(text: json as JSON, contentType:"text/html");
+    }
+
 }

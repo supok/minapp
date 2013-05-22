@@ -4,166 +4,256 @@
 
 @tabBorder: #ddd;
 
+@min_requirementt-thumbsize: 70px;
+@min_panel-border-color:#DDDDDD;
+@min_border-radius:4px;
+
 body{
   padding-top: 50px;
   padding-bottom: 40px;
   background-color: #FFFFFF;
+}
 
-  #dashboard{
-    min-height: 400px;
-    h1{
-      color: #5a5a5a;
-    }
-    a{
-      text-decoration: none;
-    }
+#dashboard{
+  min-height: 400px;
+  h1{
+    color: #5a5a5a;
+  }
+  a{
+    text-decoration: none;
+  }
+  form{
+    margin-top: 20px;
+  }
+  .alert{
+    margin-top: 15px;
+  }
+  .requirement-list{
+    margin-top: 20px;
+  }
+  .well{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .requirement{
+    margin-bottom: 10px;
+    overflow: hidden;
     form{
-      margin-top: 20px;
-    }
-    .alert{
-      margin-top: 15px;
-    }
-    .requirement-list{
-      margin-top: 20px;
-    }
-    .well{
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-    .requirement{
-      margin-bottom: 10px;
-      overflow: hidden;
-      form{
-        margin: 0px;
-        height: 30px;
-        display: none;
-        input{
-          margin-bottom: 3px;
-        }
-      }
-      .position{
-        width: 30px;
-        text-align: right;
-        margin-right: 30px;
-      }
-      .btn{
-        margin-top: 2px;
-      }
-      .btn-rename{
-        margin-right: 10px;
-      }
-      .btn-save{
-        margin-right: 10px;
+      margin: 0px;
+      height: 30px;
+      display: none;
+      input{
+        margin-bottom: 3px;
       }
     }
-    .orphaned-requirements{
-      margin-top: 20px;
+    .position{
+      width: 30px;
+      text-align: right;
+      margin-right: 30px;
+    }
+    .btn{
+      margin-top: 2px;
+    }
+    .btn-rename{
+      margin-right: 10px;
+    }
+    .btn-save{
+      margin-right: 10px;
     }
   }
+  .orphaned-requirements{
+    margin-top: 20px;
+  }
+}
 
-  #requirement{
-    .min-nav{
-      padding: 0px 15px;
-      margin: 0 0 20px;
-      list-style: none;
-      background-color: #f5f5f5;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      border-radius: 4px;
-      a{
-        margin-bottom: 6px;
+#requirement{
+  .min-nav{
+    padding: 0px 15px;
+    margin: 0 0 20px;
+    list-style: none;
+    background-color: #f5f5f5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    a{
+      margin-bottom: 6px;
+    }
+    span{
+      color: #5a5a5a;
+      margin-left: 10px;
+    }
+  }
+  .table-header{
+    background-color: #f5f5f5;
+    color: #9da0a4;
+  }
+  .table-body{
+    background-color: #FFFFFF;
+  }
+  .table-footer{
+    background-color: #f5f5f5;
+  }
+  .alert{
+    margin: 15px 0 15px 0;
+  }
+  .step{
+    overflow: hidden;
+    border: #ddd 1px solid;
+    margin-bottom: 5px;
+    padding: 5px 5px 2px 5px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    height: 32px;
+    a{
+      .span1{
+        width: 10px;
       }
-      span{
-        color: #5a5a5a;
-        margin-left: 10px;
+      div{
+        margin-top: 5px;
       }
     }
-    .table-header{
-      background-color: #f5f5f5;
-      color: #9da0a4;
+    .btn{
+      margin-top: 4px;
     }
-    .table-body{
-      background-color: #FFFFFF;
+    .btn-rename, .btn-save{
+      margin-right: 10px;
     }
-    .table-footer{
-      background-color: #f5f5f5;
+    form{
+      margin: 0px;
+      display: none;
     }
-    .alert{
-      margin: 15px 0 15px 0;
+  }
+  .form-add-step{
+    margin: 0 0 5px 0;
+    .input-append{
+      margin-bottom: 0px;
+      margin-top: 2px;
     }
-    .step{
-      overflow: hidden;
-      border: #ddd 1px solid;
-      margin-bottom: 5px;
-      padding: 5px 5px 2px 5px;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      border-radius: 4px;
-      height: 32px;
-      a{
-        .span1{
-          width: 10px;
-        }
-        div{
-          margin-top: 5px;
-        }
+  }
+  .form-add-extension{
+    margin: 4px 0 5px 0;
+    .input-append{
+      margin-bottom: 0px;
+      margin-top: 2px;
+    }
+  }
+  .extension-list{
+    .extension-header{
+      height: 30px;
+      .relationship{
+        margin-top: 4px;
+        font-weight: bold;
+      }
+      .extension-label{
+        font-weight: bold;
+        margin-top: 4px;
+        margin-left: 5px;
       }
       .btn{
         margin-top: 4px;
       }
-      .btn-rename, .btn-save{
+      .btn-extension-rename{
         margin-right: 10px;
       }
       form{
         margin: 0px;
         display: none;
-      }
-    }
-    .form-add-step{
-      margin: 0 0 5px 0;
-      .input-append{
-        margin-bottom: 0px;
-        margin-top: 2px;
-      }
-    }
-    .form-add-extension{
-      margin: 4px 0 5px 0;
-      .input-append{
-        margin-bottom: 0px;
-        margin-top: 2px;
-      }
-    }
-    .extension-list{
-      .extension-header{
-        height: 30px;
-        .relationship{
-          margin-top: 4px;
-          font-weight: bold;
+        input{
+          margin: 0px 0px 0px 5px;
         }
-        .extension-label{
-          font-weight: bold;
-          margin-top: 4px;
-          margin-left: 5px;
-        }
-        .btn{
-          margin-top: 4px;
-        }
-        .btn-extension-rename{
+        .btn-save{
           margin-right: 10px;
         }
-        form{
-          margin: 0px;
-          display: none;
-          input{
-            margin: 0px 0px 0px 5px;
-          }
-          .btn-save{
-            margin-right: 10px;
-          }
-        }
       }
-
     }
   }
 
+  #requirement-notes {
+
+    textarea {
+      height: 70px;
+    }
+
+    .upload-container {
+      float: right;
+      label {
+        margin-bottom: 9px;
+      }
+    }
+
+    #requirement-photo-container {
+      height:70px;
+      margin-bottom: 15px;
+      width: 100%;
+      min-height: 10px;
+
+      .photo-space {
+        border:1px dashed @min_panel-border-color;
+        .border-radius(@min_border-radius);
+        float: left;
+        width: @min_requirementt-thumbsize;
+        height: @min_requirementt-thumbsize;
+        margin-right: 10px;
+        overflow: hidden;
+        .box-sizing(border-box);
+        position: relative;
+
+        i {
+          display: none;
+        }
+
+        &.taken {
+          border:1px solid white;
+          width: @min_requirementt-thumbsize;
+          height: @min_requirementt-thumbsize;
+        }
+
+        &.loading {
+
+          i {
+            display: block;
+            position: absolute;
+            top:16px;
+            left:19px;
+            color: @min_panel-border-color;
+          }
+        }
+      }
+
+      #requirement-uploader {
+        position: absolute;
+        width: @min_requirementt-thumbsize - 2;
+        height: @min_requirementt-thumbsize - 2;
+
+        .qq-upload-button {
+
+          i {
+            display: block;
+            position: absolute;
+            left: 19px;
+            top:20px;
+          }
+          padding: 0px;
+          width: @min_requirementt-thumbsize - 2;
+          height: @min_requirementt-thumbsize - 2;
+        }
+
+        .qq-upload-list {
+          display: none;
+        }
+
+        input[type=file]{
+          height: @min_requirementt-thumbsize;
+          background-color: black;
+        }
+      }
+    }
+
+
+  }
+
+
+
 }
+

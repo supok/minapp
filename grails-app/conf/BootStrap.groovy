@@ -14,7 +14,6 @@ class BootStrap {
             /*
              *  Production
              */
-
             println 'IN PRODUCTION: MIN'
 
         } else if (Environment.getCurrent().name == 'development') {
@@ -22,10 +21,16 @@ class BootStrap {
             /*
              *  Development
              */
+            if (!System.getProperty('mysqldb')) {
+                println "LOADING DEVELOPEMENT MYSQL DATABASE"
+//                new DomainLoader().load()
+            }else{
+                // Comment the following lines if you do not want to load initial data in database
+                // every time server starts up
+                println "LOADING DEVELOPEMENT H2 DATABASE"
+                new DomainLoader().load()
+            }
 
-            println "LOADING DEV DATABASE"
-
-            new DomainLoader().load()
 
         }
 

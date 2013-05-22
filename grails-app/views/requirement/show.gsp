@@ -2,6 +2,7 @@
 <head>
     <title>Requirement</title>
     <meta name="layout" content="main">
+    <r:require modules="fineuploader"/>
 </head>
 <body>
 
@@ -54,6 +55,28 @@
                 </div>
             </g:if>
 
+            <%-- Notes and upload images --%>
+            <%--
+            <div id="requirement-notes" class="row">
+                <div class="span7">
+                    <form>
+                        <div id="post-modal-photos"></div>
+                        <textarea id="post-modal-body" name="body" class="input-block-level" placeholder="Type your notes"></textarea>
+                    </form>
+                </div>
+                <div class="span5">
+                    <div class="upload-container">
+                        <div id="requirement-photo-container">
+                            <div class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
+                            <div class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
+                            <div class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
+                            <div style="margin-right: 0px;" class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
+                            <div id="requirement-uploader"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            --%>
             <%-- Show Primary Path's steps --%>
 
             <table class="table table-bordered">
@@ -177,7 +200,6 @@
 
 <r:script>
     $(document).ready(function(){
-		
 
         $('.form-add-extension').submit(function() {
             var selectedSteps = [];
@@ -250,8 +272,73 @@
         });
 
         $(".child-steps-tooltip").tooltip({"placement":"top"});
-		
-		$('#add-main-path-step').focus();
+
+        $('#add-main-path-step').focus();
+
+        /*
+        // Uploader init.
+        $('#requirement-uploader').fineUploader({
+            validation: {
+                allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+                sizeLimit: 2097152
+            },
+            showMessage: function(message) {
+                $('#requirement-error').html(message);
+                $('#requirement-error').show();
+            },
+            text: {
+                uploadButton: '<div><i class="icon-camera icon-2x"></i></div>'
+            },
+            template:'<div class="qq-uploader">' +
+'<pre class="qq-upload-drop-area">{dragZoneText}</pre>' +
+'<div class="qq-upload-button btn btn-primary"> {uploadButtonText} </div>' +
+'<span class="qq-drop-processing"><span>{dropProcessingText}</span><span class="qq-drop-processing-spinner"></span></span>' +
+'<ul class="qq-upload-list"></ul>' +
+'</div>',
+            request: {
+                endpoint: "",
+                paramsInBody:true
+            }
+        }).on('complete', function(event, id, fileName, response) {
+                if($("input[name='photoIds']").length < 4) {
+                    var url = response.photoUrl;
+                    var id = response.photoId;
+                    var photoIndex = $("#requirement-photo-container .photo-space.taken").length;
+                    var $photoSpace = $($("#requirement-photo-container .photo-space")[photoIndex]);
+                    $("#requirement-photos").append('<input type="hidden" name="photoIds" value="' + id + '"/>');
+                    $photoSpace.removeClass('loading');
+                    $photoSpace.html('<img src="' + url + '"/>');
+                    $photoSpace.nailthumb({animationTime:0, width:$photoSpace.outerWidth(), height:$photoSpace.outerHeight()});
+                    $photoSpace.addClass('taken');
+                }
+            }).on('upload', function(event, id, fileName, response) {
+
+                // Set the last photo-space to loading.
+                var photoIndex = $("#requirement-photo-container .photo-space.taken, #requirement-photo-container .photo-space.loading").length;
+                var photoSpace = $("#requirement-photo-container .photo-space")[photoIndex];
+                var $photoSpace = $(photoSpace);
+                $photoSpace.addClass('loading');
+
+                // Hide the upload button if necessary.
+                if(photoIndex == 3) {
+                    $('#requirement-uploader').hide();
+                } else {
+                    $('#requirement-uploader').css({
+                        marginLeft: (photoIndex + 1) * ($photoSpace.outerWidth() + $photoSpace.margin().right)
+                    });
+                }
+            }).on('error', function(event, id, fileName, response) {
+                //TODO?
+            });
+
+
+        $('#requirement-uploader').on('upload', function() {
+            $("#requirement-post").button('loading');
+        }).on('complete', function() {
+            $("#requirement-post").button('reset');
+        });
+        */
+
 
     });
 </r:script>
