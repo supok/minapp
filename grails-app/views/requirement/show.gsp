@@ -177,7 +177,9 @@
 
 <r:script>
     $(document).ready(function(){
-
+		
+		document.getElementById('add-main-path-step').focus();
+		
         $('.form-add-extension').submit(function() {
             var selectedSteps = [];
             $('.step-select').each(function() {
