@@ -1,0 +1,18 @@
+++++++++++  1. Grails app :: Deployment to AWS  ++++++++++
+
+1. BUILD WAR
+   - Build WAR file: run "grails war" (min-app-0.1.war will be created in target directory)
+2. LOG IN TO AWS
+   - Log in to http://aws.amazon.com/console/
+   - Go to Elastic Beanstalk
+3. UPLOAD VERSION
+   - In Versions tab chose Upload New Version
+   - Chose version label to be min-app-vN (increment N from last uploaded version)
+   - Select Chose File and chose created war file
+   - Click Upload New Version.
+4. DEPLOY VERSION
+   - Under Actions dropdown in PROD environment select Deploy a Different Version
+   - Chose the version you've just uploaded and click Deploy Version.
+   - Wait for version to be deployed. DONE.
+
+++++++++++  2. Managing RDS (MYSQL)  ++++++++++
