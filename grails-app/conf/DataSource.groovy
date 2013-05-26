@@ -22,8 +22,9 @@ environments {
                 password = ""
                 driverClassName = "com.mysql.jdbc.Driver"
                 dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+                max_allowed_packet
                 logSql = false
-                dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+                dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             }else{
                 println "USING H2 DEVELOPEMENT DATABASE"
                 // Comment the following line if you do not want to recreate database

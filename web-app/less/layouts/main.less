@@ -169,90 +169,88 @@ body{
     }
   }
 
-  #requirement-notes {
+}
 
-    textarea {
-      height: 70px;
-    }
+#requirement-modal {
 
-    .upload-container {
-      float: right;
-      label {
-        margin-bottom: 9px;
-      }
-    }
-
-    #requirement-photo-container {
-      height:70px;
-      margin-bottom: 15px;
-      width: 100%;
-      min-height: 10px;
-
-      .photo-space {
-        border:1px dashed @min_panel-border-color;
-        .border-radius(@min_border-radius);
-        float: left;
-        width: @min_requirementt-thumbsize;
-        height: @min_requirementt-thumbsize;
-        margin-right: 10px;
-        overflow: hidden;
-        .box-sizing(border-box);
-        position: relative;
-
-        i {
-          display: none;
-        }
-
-        &.taken {
-          border:1px solid white;
-          width: @min_requirementt-thumbsize;
-          height: @min_requirementt-thumbsize;
-        }
-
-        &.loading {
-
-          i {
-            display: block;
-            position: absolute;
-            top:16px;
-            left:19px;
-            color: @min_panel-border-color;
-          }
-        }
-      }
-
-      #requirement-uploader {
-        position: absolute;
-        width: @min_requirementt-thumbsize - 2;
-        height: @min_requirementt-thumbsize - 2;
-
-        .qq-upload-button {
-
-          i {
-            display: block;
-            position: absolute;
-            left: 19px;
-            top:20px;
-          }
-          padding: 0px;
-          width: @min_requirementt-thumbsize - 2;
-          height: @min_requirementt-thumbsize - 2;
-        }
-
-        .qq-upload-list {
-          display: none;
-        }
-
-        input[type=file]{
-          height: @min_requirementt-thumbsize;
-          background-color: black;
-        }
-      }
-    }
-
-
+  textarea {
+    height: 150px;
   }
 
+  .upload-container {
+    width: 100%;
+    label {
+      margin-bottom: 9px;
+    }
+  }
+
+  #requirement-photo-container {
+    height:70px;
+    margin-bottom: 15px;
+    width: 100%;
+    min-height: 10px;
+
+    .photo-space {
+      border:1px dashed @min_panel-border-color;
+      .border-radius(@min_border-radius);
+      float: left;
+      width: @min_requirementt-thumbsize;
+      height: @min_requirementt-thumbsize;
+      margin-right: 10px;
+      overflow: hidden;
+      .box-sizing(border-box);
+      position: relative;
+
+      i {
+        display: none;
+      }
+
+      &.taken {
+        border:1px solid white;
+        width: @min_requirementt-thumbsize;
+        height: @min_requirementt-thumbsize;
+      }
+
+      &.loading {
+
+        i {
+          display: block;
+          position: absolute;
+          top:16px;
+          left:19px;
+          color: @min_panel-border-color;
+        }
+      }
+    }
+
+    #requirement-uploader {
+      position: absolute;
+      width: @min_requirementt-thumbsize - 2;
+      height: @min_requirementt-thumbsize - 2;
+
+      .qq-upload-button {
+
+        i {
+          display: block;
+          position: absolute;
+          left: 19px;
+          top:20px;
+        }
+        padding: 0px;
+        width: @min_requirementt-thumbsize - 2;
+        height: @min_requirementt-thumbsize - 2;
+      }
+
+      .qq-upload-list {
+        display: none;
+      }
+
+      input[type=file]{
+        height: @min_requirementt-thumbsize;
+        background-color: black;
+      }
+    }
+  }
 
 
 }

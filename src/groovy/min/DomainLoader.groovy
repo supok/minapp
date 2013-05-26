@@ -38,7 +38,23 @@ class DomainLoader {
         step11.requirement = req11
         step11.position = 1
         req1.addToSteps(step11)
-        step11.save()
+        req1.save()
+
+        TagGroup tagGroup = new TagGroup()
+        tagGroup.name = "Actor"
+        tagGroup.nameCode = "A"
+        tagGroup.save()
+
+        Tag tag = new Tag()
+        tag.name = "Casual Customer"
+        tag.nameCode = "CC"
+        tag.save()
+
+        RequirementTag requirementTag = new RequirementTag()
+        requirementTag.tag = tag
+        requirementTag.tagGroup = tagGroup
+        req1.addToRequirementTags(requirementTag)
+        req1.save()
 
 
     }

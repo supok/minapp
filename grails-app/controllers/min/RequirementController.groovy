@@ -2,6 +2,7 @@ package min
 
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
+import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 @Secured(['ROLE_ADMIN','ROLE_USER'])
 class RequirementController {
@@ -158,11 +159,47 @@ class RequirementController {
     def upload() {
         HashMap json = ['success':true];
         if(params.qqfile) {
-//            Photo photo = uploadFile(params.qqfile);
-//            json.put('photoId',photo.id);
-//            json.put('photoUrl',photo.location + '/' + photo.fileNameForSize(Photo.PhotoSize.THUMBNAIL));
+            CommonsMultipartFile file = params.qqfile
+            if (file && file.getSize() > 0) {
+                Photo photo = new Photo()
+                photo.image = file.getBytes()
+                Requirement requirement = Requirement.findById(params.id)
+                requirement.addToPhotos(photo)
+                requirement.save()
+                photo.save()
+
+                json.put('photoId', photo.id);
+                json.put('photoUrl', g.createLink(controller: 'requirement', action: 'showImage', id:photo.id));
+            }
         }
         return render(text: json as JSON, contentType:"text/html");
+    }
+
+    def deletePhoto(Long id){
+
+        Photo photo = Photo.findById(id)
+        Requirement requirement = photo.requirement
+        requirement.removeFromPhotos(photo)
+        requirement.save()
+        photo.delete()
+
+        redirect(action: 'show', id: requirement.id)
+    }
+
+    def showImage(Long id){
+        def photo = Photo.findById(id)
+        response.contentType = "image/jpeg"
+        response.contentLength = photo?.image.length
+        response.outputStream.write(photo?.image)
+    }
+
+    def saveNotes(Long id, String notes){
+
+        Requirement requirement = Requirement.findById(id)
+        requirement.description = notes
+        requirement.save()
+
+        redirect(action: 'show', id: id)
     }
 
 }

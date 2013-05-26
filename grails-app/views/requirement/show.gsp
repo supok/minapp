@@ -2,7 +2,8 @@
 <head>
     <title>Requirement</title>
     <meta name="layout" content="main">
-    <r:require modules="fineuploader"/>
+    <r:require modules="fineuploader, nailthumb, jsizes"/>
+    <ckeditor:resources/>
 </head>
 <body>
 
@@ -14,6 +15,7 @@
                 <h3>
                     <a href="<g:createLink controller="requirement" action="back"/>" class="btn btn-small" type="button" > <i class="icon-arrow-left"></i> Back</a>
                     <span>${requirement.label}</span>
+                    <a href="#requirement-modal" role="button" data-toggle="modal" class="btn btn-small btn-primary pull-right" style="margin-top: 6px;">Notes and images</a>
                 </h3>
             </div>
 
@@ -54,31 +56,33 @@
                     <strong>Error!</strong> ${flash.error}
                 </div>
             </g:if>
+            <g:if test="${requirement.photos || requirement.description}">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td style="overflow: hidden;">
+                            <div class="pull-left" style="width: 550px;">
+                                ${requirement.description}
+                            </div>
+                            <g:if test="${requirement.photos}">
+                                <div class="pull-right" style="height: 70px;">
+                                    <g:each in="${requirement.photos}" var="photo">
+                                        <div style="float: right; margin-left: 10px;">
+                                            <a class="icon-remove" style="color: #da4f49; text-decoration: none; position: relative; z-index: 1; left: 64px; top: -10px;" href="<g:createLink action="deletePhoto" id="${photo.id}"/>"></a>
+                                            <div class="nailthumb-container" style="margin-top: -20px;">
+                                                <img src="<g:createLink controller="requirement" action="showImage" id="${photo.id}"/>" height="70" width="70">
+                                            </div>
+                                        </div>
+                                    </g:each>
+                                </div>
+                            </g:if>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </g:if>
 
-            <%-- Notes and upload images --%>
-            <%--
-            <div id="requirement-notes" class="row">
-                <div class="span7">
-                    <form>
-                        <div id="post-modal-photos"></div>
-                        <textarea id="post-modal-body" name="body" class="input-block-level" placeholder="Type your notes"></textarea>
-                    </form>
-                </div>
-                <div class="span5">
-                    <div class="upload-container">
-                        <div id="requirement-photo-container">
-                            <div class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
-                            <div class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
-                            <div class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
-                            <div style="margin-right: 0px;" class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
-                            <div id="requirement-uploader"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            --%>
             <%-- Show Primary Path's steps --%>
-
             <table class="table table-bordered">
                 <tbody>
                     <tr class="table-header">
@@ -109,7 +113,8 @@
                             </g:form>
 
                             <g:form class="form-add-step" action="addRequirementStep" params="[requirementId: requirement.id]">
-                                <div class="input-append">
+                                <div class="input-append input-prepend">
+                                    <span class="add-on">${requirement.steps.size() + 1}.</span>
                                     <input class="span4" name="stepLabel" type="text" id="add-main-path-step"
                                            data-provide="typeahead"
                                            autocomplete='off'
@@ -129,7 +134,7 @@
 
                 <table class="table table-bordered extension" extensionid="${extensionMap.key.id}">
                     <tbody>
-                    <tr class="table-header">
+                    <tr class="table-header" style="cursor: pointer; cursor: hand;">
                         <td class="extension-header">
                             <div class="pull-left relationship">
                                 <g:if test="${extensionMap.value == null}">
@@ -177,7 +182,8 @@
                     <tr class="table-footer">
                         <td>
                             <g:form class="form-add-step" action="addExtensionStep" params="[requirementId: requirement.id, extensionId: extensionMap.key.id]">
-                                <div class="input-append">
+                                <div class="input-append input-prepend">
+                                    <span class="add-on">${extensionMap.key.steps.size() + 1}.</span>
                                     <input class="span4" name="stepLabel" type="text"
                                            data-provide="typeahead"
                                            data-source='${allRequirementLabels}'
@@ -197,9 +203,74 @@
     </div>
 </div>
 
+<div class="modal hide fade" id="requirement-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Requirement notes and images</h3>
+    </div>
+    <div class="modal-body">
+        <%-- Notes and upload images --%>
+        <p>
+            <strong>Upload images</strong>
+        </p>
+        <div class="upload-container">
+            <div id="requirement-photo-container">
+                <g:set var="uploadedImagesCount" value="${0}"/>
+                <g:each in="${requirement.photos}" var="photo" status="index">
+                    <div class="photo-space taken nailthumb-container" style="overflow: hidden; padding: 0px; width: 70px; height: 70px;">
+                        <img src="<g:createLink controller="requirement" action="showImage" id="${photo.id}"/>" class="nailthumb-image">
+                    </div>
+                    <g:set var="uploadedImagesCount" value="${index + 1}"/>
+                </g:each>
+                <g:if test="${uploadedImagesCount < 4}">
+                    <g:each in="${ (uploadedImagesCount ..< 3) }">
+                        <div class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
+                    </g:each>
+                    <div style="margin-right: 0px;" class="photo-space"><i class="icon-refresh icon-spin icon-2x"></i></div>
+                    <div id="requirement-uploader" style="margin-left: ${10*uploadedImagesCount + 70*uploadedImagesCount}px;"></div>
+                </g:if>
+            </div>
+        </div>
+        <p>
+            <strong>Edit notes</strong>
+        </p>
+        <g:form action="saveNotes" id="${requirement.id}">
+            <div id="post-modal-photos">
+
+            </div>
+            <div class="controls">
+                <ckeditor:editor height="150" width="100%" id="editor-1"
+                                 name="notes"
+                                 customConfig="${createLink(controller: 'ckeditor', action: 'basicConfig')}">
+                    ${requirement.description}
+                </ckeditor:editor>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        <button class="btn btn-primary" type="submit">Save</button>
+         </g:form>
+    </div>
+</div>
+
+<div class="modal hide fade" id="requirement-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Image</h3>
+    </div>
+    <div class="modal-body">
+
+    </div>
+    <div class="modal-footer">
+        <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+    </div>
+</div>
+
 
 <r:script>
     $(document).ready(function(){
+
+        $('.nailthumb-container').nailthumb({animationTime:0,width:70,height:70});
 
         $('.form-add-extension').submit(function() {
             var selectedSteps = [];
@@ -275,12 +346,12 @@
 
         $('#add-main-path-step').focus();
 
-        /*
-        // Uploader init.
+
+        /* --- UPLOADER --- */
         $('#requirement-uploader').fineUploader({
             validation: {
-                allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-                sizeLimit: 2097152
+                allowedExtensions: ['jpeg', 'jpg'],
+                sizeLimit: 4194304
             },
             showMessage: function(message) {
                 $('#requirement-error').html(message);
@@ -296,49 +367,40 @@
 '<ul class="qq-upload-list"></ul>' +
 '</div>',
             request: {
-                endpoint: "",
+                endpoint: "<g:createLink controller="requirement" action="upload" id="${requirement.id}"/>",
                 paramsInBody:true
             }
         }).on('complete', function(event, id, fileName, response) {
-                if($("input[name='photoIds']").length < 4) {
-                    var url = response.photoUrl;
-                    var id = response.photoId;
-                    var photoIndex = $("#requirement-photo-container .photo-space.taken").length;
-                    var $photoSpace = $($("#requirement-photo-container .photo-space")[photoIndex]);
-                    $("#requirement-photos").append('<input type="hidden" name="photoIds" value="' + id + '"/>');
-                    $photoSpace.removeClass('loading');
-                    $photoSpace.html('<img src="' + url + '"/>');
-                    $photoSpace.nailthumb({animationTime:0, width:$photoSpace.outerWidth(), height:$photoSpace.outerHeight()});
-                    $photoSpace.addClass('taken');
-                }
-            }).on('upload', function(event, id, fileName, response) {
+            if($("input[name='photoIds']").length < 4) {
+                var url = response.photoUrl;
+                var id = response.photoId;
+                var photoIndex = $("#requirement-photo-container .photo-space.taken").length;
+                var $photoSpace = $($("#requirement-photo-container .photo-space")[photoIndex]);
+                $("#requirement-photos").append('<input type="hidden" name="photoIds" value="' + id + '"/>');
+                $photoSpace.removeClass('loading');
+                $photoSpace.html('<img src="' + url + '"/>');
+                $photoSpace.nailthumb({animationTime:0, width:$photoSpace.outerWidth(), height:$photoSpace.outerHeight()});
+                $photoSpace.addClass('taken');
+            }
+        }).on('upload', function(event, id, fileName, response) {
 
-                // Set the last photo-space to loading.
-                var photoIndex = $("#requirement-photo-container .photo-space.taken, #requirement-photo-container .photo-space.loading").length;
-                var photoSpace = $("#requirement-photo-container .photo-space")[photoIndex];
-                var $photoSpace = $(photoSpace);
-                $photoSpace.addClass('loading');
+            // Set the last photo-space to loading.
+            var photoIndex = $("#requirement-photo-container .photo-space.taken, #requirement-photo-container .photo-space.loading").length;
+            var photoSpace = $("#requirement-photo-container .photo-space")[photoIndex];
+            var $photoSpace = $(photoSpace);
+            $photoSpace.addClass('loading');
 
-                // Hide the upload button if necessary.
-                if(photoIndex == 3) {
-                    $('#requirement-uploader').hide();
-                } else {
-                    $('#requirement-uploader').css({
-                        marginLeft: (photoIndex + 1) * ($photoSpace.outerWidth() + $photoSpace.margin().right)
-                    });
-                }
-            }).on('error', function(event, id, fileName, response) {
-                //TODO?
-            });
-
-
-        $('#requirement-uploader').on('upload', function() {
-            $("#requirement-post").button('loading');
-        }).on('complete', function() {
-            $("#requirement-post").button('reset');
+            // Hide the upload button if necessary.
+            if(photoIndex == 3) {
+                $('#requirement-uploader').hide();
+            } else {
+                $('#requirement-uploader').css({
+                    marginLeft: (photoIndex + 1) * ($photoSpace.outerWidth() + $photoSpace.margin().right)
+                });
+            }
+        }).on('error', function(event, id, fileName, response) {
+            //TODO?
         });
-        */
-
 
     });
 </r:script>

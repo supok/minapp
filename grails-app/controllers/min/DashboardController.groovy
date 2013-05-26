@@ -35,12 +35,13 @@ class DashboardController {
     def createTopLevelRequirement(String label){
 
         if (label){
-            requirementService.createTopLevelRequirement(label)
+            Requirement requirement = requirementService.createTopLevelRequirement(label)
+            redirect (controller: "requirement", action: "show", id: requirement.id)
         }else{
             flash.error = g.message(code:"min.ExtensionController.requirement.add.blank")
+            redirect (action: "index")
         }
 
-        redirect (action: "index")
     }
 
     def renameRequirement(Long id, String label){

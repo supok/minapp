@@ -6,6 +6,13 @@ class Requirement extends Sequence {
 
     Boolean topLevel = Boolean.FALSE
 
+    List<Photo> photos
+
+    static mappedBy = [steps: 'sequence']
+
+    static hasMany = [photos:Photo, requirementTags: RequirementTag]
+
+
     static mapping = {
         topLevel type: 'yes_no'
     }

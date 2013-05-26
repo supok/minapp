@@ -64,7 +64,7 @@
             <hr>
 
             <footer>
-                <p>&copy; 3WKS 2013</p>
+                <p>Powered by <a href="http://www.3wks.com.au">3WKS</a></p>
             </footer>
 
         </div>

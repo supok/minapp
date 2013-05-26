@@ -20,6 +20,10 @@ class Sequence {
         position nullable: true
     }
 
+    static mapping = {
+        description(type: "text")
+    }
+
     public List<Step> getStepsSorted(){
         Step.findAllBySequence(this,  [sort: "position", order: "asc"]);
     }

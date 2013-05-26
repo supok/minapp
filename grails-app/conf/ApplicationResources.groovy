@@ -16,9 +16,21 @@ modules = {
         resource url: '/ext/jquery-fineuploader-3.5.0/fineuploader-3.5.0.css'
     }
 
+    'nailthumb' {
+        dependsOn 'jquery'
+        resource url: '/ext/nailthumb/jquery.nailthumb.1.1.min.css'
+        resource url: '/ext/nailthumb/jquery.nailthumb.1.1.min.js'
+    }
+
+    'jsizes' {
+        dependsOn 'jquery'
+        resource url: '/ext/jquery.sizes.js'
+    }
+
     'app-main' {
         dependsOn "bootstrap"
         resource url:[dir: 'less/layouts', file: 'main.less'], attrs:[rel: "stylesheet/less", type:'css'], disposition: 'head'
     }
+
 
 }

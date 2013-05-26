@@ -10,7 +10,7 @@ class RequirementService {
         return requirements
     }
 
-    public void createTopLevelRequirement(String label){
+    public Requirement createTopLevelRequirement(String label){
 
         Integer topLevelRequirementsCount = Requirement.createCriteria().count {
             eq("topLevel", Boolean.TRUE)
@@ -29,6 +29,8 @@ class RequirementService {
         requirement.save(flush: true)
 
         normalize()
+
+        return requirement
     }
 
     public void removeRequirement(Requirement requirement){
