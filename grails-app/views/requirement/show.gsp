@@ -19,7 +19,7 @@
             <g:if test="${requirement.getParentRequirements() || requirement.getParentExtensions()}">
                 <div class="row">
                     <div class="span12">
-                        <table class="table table-condensed table-bordered">
+                        <table class="table table-condensed table-bordered table-hover">
                             <tbody>
                             <g:if test="${requirement.getParentRequirements()}">
                                 <tr class="table-header">
@@ -127,14 +127,20 @@
                                 </g:else>
                             </div>
                             <div class="pull-left extension-label">${extensionMap.key.label}</div>
-                            <a class="btn btn-danger btn-mini pull-right" href="<g:createLink controller="requirement" action="deleteExtension" id="${extensionMap.key.id}" params="[requirementId: requirement.id]"/>">Delete</a>
-                            <a class="btn btn-mini pull-right btn-extension-rename">Rename</a>
-                            <g:form action="renameExtension" id="${extensionMap.key.id}">
+                           
+						    <div style="float:right" class="btn btn-more-actions btn-mini btn-inverse"><i class="icon-plus-sign icon-white" title="More action"></i>  More</div>
+							<div class="more-actions" style="display:none">
+								<a class="btn btn-mini pull-right" title="Reorder" data-toggle="tooltip"><i class="icon-move"></i></a>
+                            	<a class="btn btn-mini pull-right" href="<g:createLink controller="requirement" action="deleteExtension" id="${extensionMap.key.id}" params="[requirementId: requirement.id]"/>" title="Remove" data-toggle="tooltip"><i class="icon-remove-sign"></i></a>
+								<a class="btn btn-mini pull-right btn-extension-rename" title="Rename" data-toggle="tooltip"><i class="icon-pencil"></i></a>
+								
+                            </div>
+							<g:form action="renameExtension" id="${extensionMap.key.id}">
                                 <input type="hidden" name="requirementId" value="${requirement.id}">
-                                <input class="span5" name="label" type="text" value="${extensionMap.key.label}"
+                                <input class="span5" style="float:left" name="label" type="text" value="${extensionMap.key.label}"
                                        autocomplete='off'
                                        placeholder="Enter extensiono label">
-                                <button class="btn btn-mini pull-right btn-primary btn-save" type="submit">Save</button>
+                                <button style="float:left;margin-left:10px" class="btn btn-mini btn-primary btn-save" type="submit">Save</button>
                             </g:form>
 
                         </td>
@@ -252,6 +258,18 @@
         $(".child-steps-tooltip").tooltip({"placement":"top"});
 		
 		$('#add-main-path-step').focus();
+		
+		$('.btn-more-actions').mouseover(function(){
+			$(this).hide();
+			$('.showing-actions').prev('.btn-more-actions').show();
+			$('.showing-actions').hide().removeClass('showing-actions');
+			$(this).next('div').fadeIn().addClass('showing-actions');
+		});
+		
+		$('.step-label').mouseover(function(){
+			$('.showing-actions').hide().removeClass('showing-actions');
+			$('.btn-more-actions').fadeIn()
+		});
 
     });
 </r:script>
