@@ -23,10 +23,10 @@
 	<a class="btn btn-mini pull-right" title="Reorder" data-toggle="tooltip"><i class="icon-move"></i></a>
     <a class="btn btn-mini pull-right btn-rename" title="Rename" data-toggle="tooltip"><i class="icon-pencil"></i></a> <!-- Rename -->
 	<g:if test="${extensionId}">
-        <a class="btn btn-mini pull-right" title="Remove" data-toggle="tooltip" href="<g:createLink controller="requirement" action="removeExtensionStep" id="${step.id}" params="[requirementId: requirement.id, extensionId: extensionId]" />"><i class="icon-remove-sign"></i></a> <!-- Remove -->
+        <a class="btn btn-mini pull-right" title="Remove" data-toggle="tooltip" href="<g:createLink controller="requirement" action="removeExtensionStep" id="${step.id}" params="[requirementId: requirement.id, extensionId: extensionId]" />" data-confirm="Are you sure you want to delete?"><i class="icon-remove-sign"></i></a> <!-- Remove -->
     </g:if>
     <g:else>
-        <a class="btn btn-mini pull-right" title="Remove" data-toggle="tooltip" href="<g:createLink controller="requirement" action="removeRequirementStep" id="${step.id}" params="[requirementId: requirement.id]" />"><i class="icon-remove-sign"></i></a> <!-- Remove -->
+        <a class="btn btn-mini pull-right" title="Remove" data-toggle="tooltip" href="<g:createLink controller="requirement" action="removeRequirementStep" id="${step.id}" params="[requirementId: requirement.id]" />" data-confirm="Are you sure you want to delete?"><i class="icon-remove-sign"></i></a> <!-- Remove -->
     </g:else>
    </div>
 	
