@@ -17,21 +17,27 @@
         </div>
 
     </a>
-    <g:if test="${extensionId}">
-        <a class="btn btn-danger btn-mini pull-right" href="<g:createLink controller="requirement" action="removeExtensionStep" id="${step.id}" params="[requirementId: requirement.id, extensionId: extensionId]" />">Remove</a>
+	
+	<div style="float:right" class="btn btn-more-actions btn-mini"><i class="icon-plus-sign" title="More action"></i>  More</div>
+	<div class="more-actions" style="display:none">
+	<a class="btn btn-mini pull-right" title="Reorder" data-toggle="tooltip"><i class="icon-move"></i></a>
+    <a class="btn btn-mini pull-right btn-rename" title="Rename" data-toggle="tooltip"><i class="icon-pencil"></i></a> <!-- Rename -->
+	<g:if test="${extensionId}">
+        <a class="btn btn-mini pull-right" title="Remove" data-toggle="tooltip" href="<g:createLink controller="requirement" action="removeExtensionStep" id="${step.id}" params="[requirementId: requirement.id, extensionId: extensionId]" />" data-confirm="Are you sure you want to delete?"><i class="icon-remove-sign"></i></a> <!-- Remove -->
     </g:if>
     <g:else>
-        <a class="btn btn-danger btn-mini pull-right" href="<g:createLink controller="requirement" action="removeRequirementStep" id="${step.id}" params="[requirementId: requirement.id]" />">Remove</a>
+        <a class="btn btn-mini pull-right" title="Remove" data-toggle="tooltip" href="<g:createLink controller="requirement" action="removeRequirementStep" id="${step.id}" params="[requirementId: requirement.id]" />" data-confirm="Are you sure you want to delete?"><i class="icon-remove-sign"></i></a> <!-- Remove -->
     </g:else>
-    <a class="btn btn-mini pull-right btn-rename" >Rename</a>
-
-    <g:form action="renameStep" id="${step.id}">
+   </div>
+	
+	
+    <g:form style="float:left" action="renameStep" id="${step.id}">
         <input type="hidden" name="requirementId" value="${requirement.id}">
-        <input class="span5" name="label" type="text" value="${step.requirement.label}"
+        <input style="float:left" class="span5" name="label" type="text" value="${step.requirement.label}"
                autocomplete='off'
                placeholder="Enter step label"
                data-provide="typeahead"
                data-source='${allRequirementLabels}' >
-        <button class="btn btn-mini pull-right btn-primary btn-save" type="submit" >Save</button>
+        <button style="float:left;margin-left:5px" class="btn btn-mini btn-primary btn-save" type="submit" >Save</button>
     </g:form>
 </div>
