@@ -15,7 +15,7 @@
                 <h3>
                     <a href="<g:createLink controller="requirement" action="back"/>" class="btn btn-small" type="button" > <i class="icon-arrow-left"></i> Back</a>
                     <span>${requirement.label}</span>
-                    <a href="#requirement-modal" role="button" data-toggle="modal" class="btn btn-small btn-primary pull-right" style="margin-top: 6px;">Notes and images</a>
+                    
                 </h3>
             </div>
 
@@ -56,31 +56,7 @@
                     <strong>Error!</strong> ${flash.error}
                 </div>
             </g:if>
-            <g:if test="${requirement.photos || requirement.description}">
-                <table class="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <td style="overflow: hidden;">
-                            <div class="pull-left" style="width: 550px;">
-                                ${requirement.description}
-                            </div>
-                            <g:if test="${requirement.photos}">
-                                <div class="pull-right" style="height: 70px;">
-                                    <g:each in="${requirement.photos}" var="photo">
-                                        <div style="float: right; margin-left: 10px;">
-                                            <a class="icon-remove" style="color: #da4f49; text-decoration: none; position: relative; z-index: 1; left: 64px; top: -10px;" href="<g:createLink action="deletePhoto" id="${photo.id}"/>"></a>
-                                            <div class="nailthumb-container" style="margin-top: -20px;">
-                                                <img src="<g:createLink controller="requirement" action="showImage" id="${photo.id}"/>" height="70" width="70">
-                                            </div>
-                                        </div>
-                                    </g:each>
-                                </div>
-                            </g:if>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </g:if>
+            
 
             <%-- Show Primary Path's steps --%>
             <table class="table table-bordered">
@@ -127,6 +103,44 @@
                     </tr>
                 </tbody>
             </table>
+			
+			
+            <g:if test="${requirement.photos || requirement.description}">
+			
+                <table class="table table-bordered">
+                    <tbody>
+                    
+					
+                    <tr class="table-header">
+                        <td>
+                            <strong>Notes &amp; Images</strong>
+                        </td>
+                    </tr>
+					<tr>
+                        <td style="overflow: hidden;">
+                            <div class="pull-left" style="width: 550px;">
+                                ${requirement.description}
+                            </div>
+                            <g:if test="${requirement.photos}">
+                                <div class="pull-right" style="height: 70px;">
+                                    <g:each in="${requirement.photos}" var="photo">
+                                        <div style="float: right; margin-left: 10px;">
+                                            <a class="icon-remove" style="color: #da4f49; text-decoration: none; position: relative; z-index: 1; left: 64px; top: -10px;" href="<g:createLink action="deletePhoto" id="${photo.id}"/>"></a>
+                                            <div class="nailthumb-container" style="margin-top: -20px;">
+                                                <img src="<g:createLink controller="requirement" action="showImage" id="${photo.id}"/>" height="70" width="70">
+                                            </div>
+                                        </div>
+                                    </g:each>
+                                </div>
+                            </g:if>
+                        </td>
+                    </tr>
+					<tr class="table-footer">
+						<td><a href="#requirement-modal" role="button" data-toggle="modal" class="btn btn-primary pull-right" style="margin-top: 6px;">Add Notes &amp; Images</a></td>
+					</tr>
+                    </tbody>
+                </table>
+            </g:if>
 
             <%-- Show Extensions --%>
             <div class="extension-list">
@@ -205,6 +219,8 @@
 
             </g:each>
             </div>
+			
+			
         </div>
     </div>
 </div>
