@@ -41,8 +41,8 @@
 
                             <sec:ifAnyGranted roles="ROLE_USER">
 
-                                <li <g:if test="${controllerName=='dashboard'}">class="active"</g:if>><a class="tab-orders" href="${createLink(controller: 'dashboard',action: 'index')}">MIN Dashboard </a></li>
-
+                                <li <g:if test="${controllerName=='dashboard'}">class="active"</g:if>><a class="tab-orders" href="${createLink(controller: 'dashboard',action: 'index')}">MIN Dashboard</a></li>
+                                <li <g:if test="${controllerName=='tags'}">class="active"</g:if>><a class="tab-orders" href="${createLink(controller: 'tags',action: 'list')}">Tags</a></li>
                             </sec:ifAnyGranted>
                         </ul>
                     </sec:ifLoggedIn>

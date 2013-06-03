@@ -9,7 +9,7 @@
         </div>
         <div class="span1">${step.position}.</div>
         <div class="span8">
-            ${step.requirement.label}
+            ${step.requirement.getLabelWithTags()}
             <g:set var="substepsCount" value="${step.requirement.steps.size()}"/>
             <g:if test="${substepsCount > 0}">
                 <i class="icon-plus-sign child-steps-tooltip" data-original-title="This requirement has ${substepsCount} step<g:if test="${substepsCount > 1}">s</g:if>"></i>

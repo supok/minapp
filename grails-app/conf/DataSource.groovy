@@ -22,7 +22,6 @@ environments {
                 password = ""
                 driverClassName = "com.mysql.jdbc.Driver"
                 dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-                max_allowed_packet
                 logSql = false
                 dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             }else{

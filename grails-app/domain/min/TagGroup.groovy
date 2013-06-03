@@ -10,4 +10,12 @@ class TagGroup {
 
     static constraints = {
     }
+
+    public List getAllTags(){
+
+        List requirementTags = RequirementTag.findAllByTagGroup(this)
+
+        return requirementTags*.tag
+
+    }
 }

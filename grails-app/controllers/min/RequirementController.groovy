@@ -59,6 +59,7 @@ class RequirementController {
                 Requirement r = step.requirement
                 r.label = label
                 r.save()
+                requirementService.assignTagsToRequirement(label, r)
             }
         }else{
             flash.error = g.message(code:"min.ExtensionController.step.rename.blank")

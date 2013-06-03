@@ -14,7 +14,7 @@
             <div class="min-nav">
                 <h3>
                     <a href="<g:createLink controller="requirement" action="back"/>" class="btn btn-small" type="button" > <i class="icon-arrow-left"></i> Back</a>
-                    <span>${requirement.label}</span>
+                    <span>${requirement.getLabelWithTags()}</span>
                     <a href="#requirement-modal" role="button" data-toggle="modal" class="btn btn-small btn-primary pull-right" style="margin-top: 6px;">Notes and images</a>
                 </h3>
             </div>
@@ -30,7 +30,7 @@
                                 </tr>
                                 <g:each in="${requirement.getParentRequirements()}" var="parent">
                                     <tr>
-                                        <td><a href="<g:createLink controller="requirement" action="show" id="${parent.id}"/>">${parent.label}</a></td>
+                                        <td><a href="<g:createLink controller="requirement" action="show" id="${parent.id}"/>">${parent.getLabelWithTags()}</a></td>
                                     </tr>
                                 </g:each>
                             </g:if>

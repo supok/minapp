@@ -15,4 +15,8 @@ class RequirementTag {
     static constraints = {
 
     }
+
+    static mapping = {
+
+    }
 }

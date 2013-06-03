@@ -22,7 +22,7 @@
                 <g:each in="${requirements}" var="requirement">
                     <a href="<g:createLink controller="requirement" action="show" id="${requirement.id}"/>">
                         <div class="well lead requirement" requirementid="${requirement.id}">
-                            <div class="pull-left requirement-label">${requirement.label}</div>
+                            <div class="pull-left requirement-label">${requirement.getLabelWithTags()}</div>
                             <a class="btn btn-danger btn-small pull-right" href="<g:createLink controller="dashboard" action="removeRequirement" id="${requirement.id}"/>">Remove</a>
                             <a class="btn btn-small pull-right btn-rename btn-requirement-rename">Rename</a>
 

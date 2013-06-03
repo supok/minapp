@@ -7,7 +7,7 @@ package min
  */
 class DomainLoader {
 
-    void load(){
+    void loadUsers(){
         /*
          * Load users
          */
@@ -20,6 +20,9 @@ class DomainLoader {
 
         UserRole.create(minUser, Role.findByAuthority('ROLE_USER'));
 
+    }
+
+    void loadData(){
         /*
          * Load test requirements
          */
@@ -55,7 +58,5 @@ class DomainLoader {
         requirementTag.tagGroup = tagGroup
         req1.addToRequirementTags(requirementTag)
         req1.save()
-
-
     }
 }

@@ -58,6 +58,9 @@ class DashboardController {
             }else{
                 requirement.label = label
                 requirement.save()
+
+                requirementService.assignTagsToRequirement(label, requirement)
+
             }
         }else{
             flash.error = g.message(code:"min.ExtensionController.requirement.rename.blank")

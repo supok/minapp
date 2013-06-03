@@ -25,6 +25,9 @@ class RequirementService {
             requirement.label = label
             requirement.topLevel = Boolean.TRUE
             requirement.position = topLevelRequirementsCount + 1
+
+            assignTagsToRequirement(label, requirement)
+
         }
         requirement.save(flush: true)
 
@@ -72,6 +75,84 @@ class RequirementService {
             }
             sequence.addToSteps(newStep);
             sequence.save();
+
+            assignTagsToRequirement(stepLabel, newRequirement)
+        }
+    }
+
+    public void assignTagsToRequirement(String label, Requirement requirement){
+        def t = /@(\w+):(\w+)/
+        List tagGroups = (label =~ t).collect { matcher ->
+            String first = matcher[0].tokenize(':').first()
+            first = first.substring(1,first.length())
+            return ["tagGroup":first,"tag":matcher[0].tokenize(':').last()]
+        }
+
+        removeAllTagsFromRequirement(requirement)
+
+        tagGroups.each { HashMap map->
+
+            TagGroup tagGroup = TagGroup.findByNameCode(map.get("tagGroup"))
+            if (!tagGroup){
+                tagGroup = new TagGroup()
+                tagGroup.name = map.get("tagGroup")
+                tagGroup.nameCode = map.get("tagGroup")
+                tagGroup.save()
+            }
+
+            Tag tag = Tag.findByNameCode(map.get("tag"))
+            if(!tag){
+                tag = new Tag()
+                tag.name = map.get("tag")
+                tag.nameCode = map.get("tag")
+                tag.save()
+            }
+
+            RequirementTag requirementTag = RequirementTag.findByTagGroupAndTag(tagGroup,tag)
+
+            if(!requirementTag){
+                requirementTag = new RequirementTag()
+                requirementTag.tag = tag
+                requirementTag.tagGroup = tagGroup
+                requirement.addToRequirementTags(requirementTag)
+                requirement.save()
+            }else{
+                if(!requirementTag.requirements.contains(requirement)){
+                    requirement.addToRequirementTags(requirementTag)
+                    requirement.save()
+                }
+            }
+        }
+    }
+
+    public void removeAllTagsFromRequirement(Requirement requirement){
+        def l = []
+        l += requirement.requirementTags
+
+        l.each {RequirementTag requirementTag ->
+            if (requirementTag){
+
+                Tag tag = requirementTag.tag
+                TagGroup tagGroup = requirementTag.tagGroup
+
+                requirement.removeFromRequirementTags(requirementTag)
+                requirementTag.removeFromRequirements(requirement)
+
+                if(requirementTag.requirements.size() < 2){
+                    requirementTag.tag = null
+                    requirementTag.tagGroup = null
+                    requirementTag.delete()
+                }
+
+                if (RequirementTag.countByTagGroup(tagGroup) == 0){
+                    tagGroup.delete()
+                }
+
+                if (RequirementTag.countByTag(tag) == 0){
+                    tag.delete()
+                }
+
+            }
         }
     }
 
@@ -94,6 +175,7 @@ class RequirementService {
             }
 
         } else {
+
             for (stepId in checkedSteps) {
 
                 Step step = Step.findById(new Long(stepId));
@@ -153,6 +235,8 @@ class RequirementService {
     }
 
     public void deleteRequirement(Requirement requirement){
+
+        removeAllTagsFromRequirement(requirement)
 
         requirement.getExtensionsMap().each {k, v->
             deleteExtension(k)
