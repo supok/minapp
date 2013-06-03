@@ -15,7 +15,7 @@
                 <h3>
                     <a href="<g:createLink controller="requirement" action="back"/>" class="btn btn-small" type="button" > <i class="icon-arrow-left"></i> Back</a>
                     <span>${requirement.getLabelWithTags()}</span>
-                    
+
                 </h3>
             </div>
 
@@ -139,7 +139,7 @@
 					</td>
                 </tr>
 				<tr class="table-footer">
-					<td><a href="#requirement-modal" role="button" data-toggle="modal" class="btn btn-primary pull-right" style="margin-top: 6px;">Add Notes &amp; Images</a></td>
+					<td><a href="#requirement-modal" role="button" data-toggle="modal" class="btn btn-primary pull-right">Add Notes &amp; Images</a></td>
 				</tr>
                 </tbody>
             </table>

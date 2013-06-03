@@ -22,7 +22,7 @@
                 <g:each in="${requirements}" var="requirement">
                     <a href="<g:createLink controller="requirement" action="show" id="${requirement.id}"/>">
                         <div class="well lead requirement" requirementid="${requirement.id}">
-                            <div class="pull-left requirement-label" style="width:80%">${requirement.label}</div>
+                            <div class="pull-left requirement-label" style="width:80%">${requirement.getLabelWithTags()}</div>
 						    
 							<div style="float:right" class="btn btn-more-actions btn-mini"><i class="icon-plus-sign icon-white" title="More action"></i>  More</div>
 							<div class="more-actions" style="display:none">
@@ -60,7 +60,7 @@
                     <g:each in="${orphanedRequirements}" var="requirement">
                         <a href="<g:createLink controller="requirement" action="show" id="${requirement.id}"/>">
                             <div class="well lead requirement">
-                                <div class="pull-left">${requirement.label}</div>
+                                <div class="pull-left">${requirement.getLabelWithTags()}</div>
                                 <a class="btn btn-danger btn-small pull-right" href="<g:createLink controller="dashboard" action="deleteRequirement" id="${requirement.id}"/>">Delete</a>
                             </div>
                         </a>
