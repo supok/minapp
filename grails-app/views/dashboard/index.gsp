@@ -17,7 +17,7 @@
                 </div>
             </g:if>
 
-            <h1>Existing requirements</h1>
+            <h2>Existing requirements</h2>
             <div class="requirement-list">
                 <g:each in="${requirements}" var="requirement">
                     <a href="<g:createLink controller="requirement" action="show" id="${requirement.id}"/>">
@@ -32,10 +32,10 @@
                             </div>
 							
                             <g:form action="renameRequirement" id="${requirement.id}">
-                                <input class="span5" name="label" type="text" value="${requirement.label}"
+                                <input class="span5 pull-left" name="label" type="text" value="${requirement.label}"
                                        autocomplete='off'
                                        placeholder="Enter a requirement label">
-                                <button class="btn btn-small pull-right btn-primary btn-save" type="submit">Save</button>
+                                <button class="btn btn-small pull-left btn-primary btn-save" type="submit">Save</button>
                             </g:form>
 
                         </div>
@@ -55,13 +55,13 @@
             </g:form>
             <g:if test="${orphanedRequirements.size()>0}">
                 <hr/>
-                <h1>Orphaned requirements</h1>
+                <h2>Orphaned requirements</h2>
                 <div class="orphaned-requirements">
                     <g:each in="${orphanedRequirements}" var="requirement">
                         <a href="<g:createLink controller="requirement" action="show" id="${requirement.id}"/>">
                             <div class="well lead requirement">
                                 <div class="pull-left">${requirement.getLabelWithTags()}</div>
-                                <a class="btn btn-danger btn-small pull-right" href="<g:createLink controller="dashboard" action="deleteRequirement" id="${requirement.id}"/>">Delete</a>
+                                <a class="btn btn-mini pull-right" href="<g:createLink controller="dashboard" action="deleteRequirement" id="${requirement.id}" title="Remove" data-toggle="tooltip" data-confirm="Are you sure you want to delete?"/>"><i class="icon-remove-sign"></i> Delete</a>
                             </div>
                         </a>
                     </g:each>
@@ -111,7 +111,7 @@
 			$(this).hide();
 			$('.showing-actions').prev('.btn-more-actions').show();
 			$('.showing-actions').hide().removeClass('showing-actions');
-			$('.more-actions').fadeIn().addClass('showing-actions');
+			$(this).parent().next('div').fadeIn().addClass('showing-actions');
 		});
 		
 		$('.requirement-label').mouseover(function(){
