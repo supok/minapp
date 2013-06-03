@@ -61,7 +61,7 @@
                         <a href="<g:createLink controller="requirement" action="show" id="${requirement.id}"/>">
                             <div class="well lead requirement">
                                 <div class="pull-left">${requirement.label}</div>
-                                <a class="btn btn-small pull-right" href="<g:createLink controller="dashboard" action="deleteRequirement" id="${requirement.id}" title="Remove" data-toggle="tooltip" data-confirm="Are you sure you want to delete?"/>"><i class="icon-remove-sign"></i> Delete</a>
+                                <a class="btn btn-mini pull-right" href="<g:createLink controller="dashboard" action="deleteRequirement" id="${requirement.id}" title="Remove" data-toggle="tooltip" data-confirm="Are you sure you want to delete?"/>"><i class="icon-remove-sign"></i> Delete</a>
                             </div>
                         </a>
                     </g:each>
