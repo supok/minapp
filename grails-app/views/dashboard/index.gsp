@@ -32,10 +32,10 @@
                             </div>
 							
                             <g:form action="renameRequirement" id="${requirement.id}">
-                                <input class="span5" name="label" type="text" value="${requirement.label}"
+                                <input class="span5 pull-left" name="label" type="text" value="${requirement.label}"
                                        autocomplete='off'
                                        placeholder="Enter a requirement label">
-                                <button class="btn btn-small pull-right btn-primary btn-save" type="submit">Save</button>
+                                <button class="btn btn-small pull-left btn-primary btn-save" type="submit">Save</button>
                             </g:form>
 
                         </div>
@@ -111,7 +111,7 @@
 			$(this).hide();
 			$('.showing-actions').prev('.btn-more-actions').show();
 			$('.showing-actions').hide().removeClass('showing-actions');
-			$('.more-actions').fadeIn().addClass('showing-actions');
+			$(this).parent().next('div').fadeIn().addClass('showing-actions');
 		});
 		
 		$('.requirement-label').mouseover(function(){
