@@ -15,7 +15,6 @@
                 <h3>
                     <a href="<g:createLink controller="requirement" action="back"/>" class="btn btn-small" type="button" > <i class="icon-arrow-left"></i> Back</a>
                     <span>${requirement.getLabelWithTags()}</span>
-
                 </h3>
             </div>
 
@@ -98,14 +97,13 @@
                                            data-source='${allRequirementLabels}'>
                                     <button class="btn btn-primary" type="submit">Add Step</button>
                                 </div>
+                                <a href="#step-help-modal" role="button" data-toggle="modal" class="btn btn-mini">Help</a>
                             </g:form>
                         </td>
                     </tr>
                 </tbody>
             </table>
-			
-			
-            
+
 			<!-- Add Notes & Images -->
             <table class="table table-bordered">
                 <tbody>
@@ -126,7 +124,7 @@
                                     <div style="float: right; margin-left: 10px;">
                                         <a class="icon-remove" style="color: #da4f49; text-decoration: none; position: relative; z-index: 1; left: 64px; top: -10px;" href="<g:createLink action="deletePhoto" id="${photo.id}"/>"></a>
                                         <div class="nailthumb-container" style="margin-top: -20px;">
-                                            <img src="<g:createLink controller="requirement" action="showImage" id="${photo.id}"/>" height="70" width="70">
+                                            <img class="preview-photo" src="<g:createLink controller="requirement" action="showImage" id="${photo.id}"/>" height="70" width="70">
                                         </div>
                                     </div>
                                 </g:each>
@@ -278,22 +276,45 @@
     </div>
 </div>
 
-<div class="modal hide fade" id="requirement-modal">
+<div class="modal hide fade" id="step-help-modal">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Image</h3>
+        <h3>Help</h3>
     </div>
     <div class="modal-body">
-
+        <p>You can use tags in a step label. No spaces are allowed.</p>
+        <p>Use <span class="tag">@tagGroup:tag</span> tag format. For example <span class="tag">@user:maxim</span> or <span class="tag">@action:login</span>.</p>
+        <p>You can go to Tags section to edit how tags are displayed. For example you can make <span class="tag">@user:maxim</span> to look like <span class="tag">@user:Maxim</span> when it is displayed.</p>
     </div>
     <div class="modal-footer">
-        <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+    </div>
+</div>
+
+<div id="preview-image-modal" class="lightbox hide fade"  tabindex="-1" role="dialog" aria-hidden="true">
+    <div class='lightbox-header'>
+        <button type="button" class="close" data-dismiss="lightbox" aria-hidden="true">&times;</button>
+    </div>
+    <div class='lightbox-content'>
     </div>
 </div>
 
 
 <r:script>
     $(document).ready(function(){
+        // Use to get json taggroups for autocomplete
+        $.getJSON('${createLink(controller: "requirement", action: "ajaxTagGroups")}',
+            {}, function(data) {
+                //alert(data.tagGroups);
+            });
+
+        $('.preview-photo').click(function (e) {
+            var html = "<img src='" + $(this).attr('src') + "'/>";
+            var m = $('#preview-image-modal');
+            m.find('.lightbox-content').html(html);
+            m.lightbox({keyboard:true, show:true, resizeToFit: true})
+            e.preventDefault();
+        });
 
         $('.nailthumb-container').nailthumb({animationTime:0,width:70,height:70});
 
@@ -402,7 +423,7 @@
         $('#requirement-uploader').fineUploader({
             validation: {
                 allowedExtensions: ['jpeg', 'jpg'],
-                sizeLimit: 4194304
+                sizeLimit: 5242880
             },
             showMessage: function(message) {
                 $('#requirement-error').html(message);
@@ -450,7 +471,7 @@
                 });
             }
         }).on('error', function(event, id, fileName, response) {
-            //TODO?
+
         });
 
     });

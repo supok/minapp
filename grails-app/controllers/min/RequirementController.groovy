@@ -203,4 +203,17 @@ class RequirementController {
         redirect(action: 'show', id: id)
     }
 
+    def ajaxTagGroups(){
+        def tagGroups = []
+        TagGroup.findAll().each {TagGroup tagGroup ->
+            List tags = []
+            tagGroup.getAllTags().each{Tag tag ->
+                tags.add([["nameCode":tag.nameCode,"name":tag.name]])
+            }
+            tagGroups.add(["nameCode":tagGroup.nameCode,"name":tagGroup.name,"tags":tags])
+        }
+        def out = ["tagGroups":tagGroups]
+        render out as JSON
+    }
+
 }

@@ -50,10 +50,12 @@ class LoginController {
 			return
 		}
 
+        Boolean firstUser = User.count()==0?Boolean.TRUE:Boolean.FALSE
+
 		String view = 'auth'
 		String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
 		render view: view, model: [postUrl: postUrl,
-		                           rememberMeParameter: config.rememberMe.parameter]
+		                           rememberMeParameter: config.rememberMe.parameter,firstUser:firstUser]
 	}
 
 	/**
@@ -133,4 +135,21 @@ class LoginController {
 	def ajaxDenied = {
 		render([error: 'access denied'] as JSON)
 	}
+
+    def createFirstUser(String firstName, String lastName, String email, String username, String password){
+        if (User.count()==0){
+
+            def roleAdmin = new Role(name: 'Admin user', authority: 'ROLE_ADMIN').save()
+            def roleUser = new Role(name: 'Regular user', authority: 'ROLE_USER').save()
+
+            def minUser = new User(firstName: firstName, lastName: lastName,
+                    email: email, username: username,
+                    password: password, enabled: true).save(failOnError: true);
+            UserRole.create(minUser, Role.findByAuthority('ROLE_USER'));
+            redirect(action: "created")
+        }
+    }
+
+    def created = {}
+
 }

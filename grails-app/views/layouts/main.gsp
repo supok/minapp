@@ -13,7 +13,7 @@
 
         <meta name="viewport" content="width=1050">
 
-        <r:require modules="jquery, jquery-ui, app-main"/>
+        <r:require modules="jquery, jquery-ui, app-main, bootstrap"/>
 
         <g:layoutHead/>
 		<r:layoutResources />
@@ -40,9 +40,9 @@
                         <ul class="nav">
 
                             <sec:ifAnyGranted roles="ROLE_USER">
-
                                 <li <g:if test="${controllerName=='dashboard'}">class="active"</g:if>><a class="tab-orders" href="${createLink(controller: 'dashboard',action: 'index')}">MIN Dashboard</a></li>
-                                <li <g:if test="${controllerName=='tags'}">class="active"</g:if>><a class="tab-orders" href="${createLink(controller: 'tags',action: 'list')}">Tags</a></li>
+                                <li <g:if test="${controllerName=='orphaned'}">class="active"</g:if>><a class="tab-orders" href="${createLink(controller: 'orphaned',action: 'list')}">Orphaned Requirements</a></li>
+                                <li <g:if test="${controllerName=='tags'}">class="active"</g:if>><a class="tab-orders" href="${createLink(controller: 'tags',action: 'list')}">Tags Management</a></li>
                             </sec:ifAnyGranted>
                         </ul>
                     </sec:ifLoggedIn>

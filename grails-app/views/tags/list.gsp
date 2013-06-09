@@ -21,9 +21,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Tag Group Name</th>
-                        <th>Tag Name</th>
-                        <th>Name Code</th>
+                        <th>Tag Group Code</th>
+                        <th>Tag Code</th>
+                        <th>Display Name</th>
                         <th>Action</th>
                     </tr>
                 </thead>

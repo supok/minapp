@@ -88,7 +88,7 @@ class RequirementService {
             return ["tagGroup":first,"tag":matcher[0].tokenize(':').last()]
         }
 
-        removeAllTagsFromRequirement(requirement)
+        markRequirementTagsAsDirty(requirement)
 
         tagGroups.each { HashMap map->
 
@@ -111,47 +111,110 @@ class RequirementService {
             RequirementTag requirementTag = RequirementTag.findByTagGroupAndTag(tagGroup,tag)
 
             if(!requirementTag){
+                log.debug("Requirement tag not found. Creating one.")
                 requirementTag = new RequirementTag()
                 requirementTag.tag = tag
                 requirementTag.tagGroup = tagGroup
                 requirement.addToRequirementTags(requirementTag)
                 requirement.save()
             }else{
-                if(!requirementTag.requirements.contains(requirement)){
+                if(!requirementTag.requirements*.id.contains(requirement.id)){
+                    log.debug("RequrementTag found but not linked to requirement. Adding to requirement.")
                     requirement.addToRequirementTags(requirementTag)
                     requirement.save()
+                }else{
+                    log.debug("RequrementTag found and already added to requirement. Removing dirty flag.")
+                    requirementTag.dirty = Boolean.FALSE
+                    requirementTag.save()
                 }
             }
+        }
+
+        requirementCleanUp(requirement)
+
+    }
+
+    public void markRequirementTagsAsDirty(Requirement requirement){
+        def l = []
+        l += requirement.requirementTags
+        l.each {RequirementTag requirementTag ->
+            if (requirementTag){
+                requirementTag.dirty = Boolean.TRUE
+                requirement.save()
+            }
+        }
+    }
+
+    public void requirementCleanUp(Requirement requirement){
+
+        //Cleanup
+        def l = []
+        requirement.requirementTags.each {
+            if(it.dirty){
+                l+= it
+            }
+        }
+
+        l.each {RequirementTag requirementTag ->
+            log.debug("Dirty: ${requirementTag.tag.name} ${requirementTag.requirements?.size()}")
+            if (requirementTag){
+                Tag tag = requirementTag.tag
+                TagGroup tagGroup = requirementTag.tagGroup
+
+                requirement.removeFromRequirementTags(requirementTag)
+                requirement.save(flush: true)
+
+                if(requirementTag.requirements?.size() < 2){
+                    log.debug("DELETE requirementTag")
+                    requirementTag.delete(flush: true)
+                }else{
+                    requirementTag.dirty = Boolean.FALSE
+                    requirementTag.save()
+                }
+
+                if (RequirementTag.countByTagGroup(tagGroup) == 0){
+                    log.debug("DELETE tagGroup")
+                    tagGroup.delete()
+                }
+
+                if (RequirementTag.countByTag(tag) == 0){
+                    log.debug("DELETE tag")
+                    tag.delete()
+                }
+            }
+
         }
     }
 
     public void removeAllTagsFromRequirement(Requirement requirement){
         def l = []
         l += requirement.requirementTags
-
         l.each {RequirementTag requirementTag ->
-            if (requirementTag){
+            deleteRequirementTag(requirementTag, requirement)
+        }
+    }
 
-                Tag tag = requirementTag.tag
-                TagGroup tagGroup = requirementTag.tagGroup
+    private void deleteRequirementTag(RequirementTag requirementTag, Requirement requirement){
+        if (requirementTag){
+            Tag tag = requirementTag.tag
+            TagGroup tagGroup = requirementTag.tagGroup
 
-                requirement.removeFromRequirementTags(requirementTag)
-                requirementTag.removeFromRequirements(requirement)
+            requirement.removeFromRequirementTags(requirementTag)
+            requirement.save()
 
-                if(requirementTag.requirements.size() < 2){
-                    requirementTag.tag = null
-                    requirementTag.tagGroup = null
-                    requirementTag.delete()
-                }
+            if(requirementTag.requirements?.size() ==0 ){
+                log.debug("DELETE requirementTag" )
+                requirementTag.delete(flush: true)
+            }
 
-                if (RequirementTag.countByTagGroup(tagGroup) == 0){
-                    tagGroup.delete()
-                }
+            if (RequirementTag.countByTagGroup(tagGroup) == 0){
+                log.debug("DELETE tagGroup")
+                tagGroup.delete()
+            }
 
-                if (RequirementTag.countByTag(tag) == 0){
-                    tag.delete()
-                }
-
+            if (RequirementTag.countByTag(tag) == 0){
+                log.debug("DELETE tag")
+                tag.delete()
             }
         }
     }

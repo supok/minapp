@@ -7,6 +7,9 @@ modules = {
         resource url: '/ext/bootstrap-2.3.1/css/bootstrap.css'
         resource url: '/ext/bootstrap-2.3.1/js/bootstrap.js'
         resource url: '/ext/font-awesome/css/font-awesome.min.css'
+        resource url: '/ext/bootstrap-lightbox/css/bootstrap-lightbox.css'
+        resource url: '/ext/bootstrap-lightbox/js/bootstrap-lightbox.js'
+        //resource url: '/ext/bootstrap-2.3.1/js/typeahead.js'
     }
 
     'fineuploader' {

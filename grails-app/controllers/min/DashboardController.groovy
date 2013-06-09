@@ -16,20 +16,9 @@ class DashboardController {
 
         def allRequirementLabels = Requirement.list()*.label as JSON
 
-        List<Requirement> orphanedRequirements = Requirement.createCriteria().list {
-            and{
-                eq('topLevel',Boolean.FALSE)
-                List<Step> steps = Step.list()
-                if (steps){
-                    List<Long> stepRequirementsIds = steps*.requirement*.id
-                    not {'in'("id",stepRequirementsIds)}
-                }
-            }
-        }
-
         session.removeAttribute(REQIIREMENT_HISTORY)
 
-        [requirements: requirements, orphanedRequirements: orphanedRequirements, allRequirementLabels: allRequirementLabels]
+        [requirements: requirements, allRequirementLabels: allRequirementLabels]
     }
 
     def createTopLevelRequirement(String label){
@@ -87,12 +76,6 @@ class DashboardController {
             it.position = idx + 1
             it.save()
         }
-        redirect(action: 'index')
-    }
-
-    def deleteRequirement(Long id){
-        Requirement requirement = Requirement.findById(id)
-        requirementService.deleteRequirement(requirement)
         redirect(action: 'index')
     }
 
