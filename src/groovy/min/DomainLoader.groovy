@@ -16,7 +16,7 @@ class DomainLoader {
 
         def minUser = new User(firstName: "Min", lastName: "Min",
                 email: "min@gmail.com", username: "min",
-                password: "uni715", enabled: true).save(failOnError: true);
+                password: "p", enabled: true).save(failOnError: true);
 
         UserRole.create(minUser, Role.findByAuthority('ROLE_USER'));
 
