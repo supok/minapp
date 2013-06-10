@@ -352,6 +352,10 @@
         $( ".step-list").disableSelection();
 
         $( ".extension-list" ).sortable({
+            connectWith: ".extension-list",
+            start: function(e, ui){
+                ui.placeholder.height(ui.item.height());
+            },
             stop: function(event, ui) {
                 var extensionsOrder = new Array();
                 var listExtensions = $(this).find(".extension");

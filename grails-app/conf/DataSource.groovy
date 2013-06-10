@@ -23,7 +23,6 @@ environments {
                 driverClassName = "com.mysql.jdbc.Driver"
                 dialect = org.hibernate.dialect.MySQL5InnoDBDialect
                 logSql = false
-                dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             }else{
                 println "USING H2 DEVELOPEMENT DATABASE"
                 // Comment the following line if you do not want to recreate database
@@ -60,6 +59,13 @@ environments {
                 testOnReturn=true
                 validationQuery="SELECT 1"
             }
+        }
+    }
+    standalone{
+        println "USING H2 standalone DATABASE"
+        dataSource {
+            dbCreate = "update"
+            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
     }
 }

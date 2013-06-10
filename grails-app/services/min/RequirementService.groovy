@@ -234,7 +234,9 @@ class RequirementService {
             /* Check if current extension is a step of any other extension and add an ExtensionOrder for it */
             List<Step> steps = Step.findAllByRequirement(requirement)
             steps.each {
-                createExtensionOrder(it.sequence, extension)
+                if (it.sequence.instanceOf(Requirement)){
+                    createExtensionOrder((Requirement)it.sequence, extension)
+                }
             }
 
         } else {
@@ -252,7 +254,9 @@ class RequirementService {
                 /* Check if current extension is a step of any other extension and add an ExtensionOrder for it */
                 List<Step> steps = Step.findAllByRequirement(step.requirement)
                 steps.each {
-                    createExtensionOrder(it.sequence, extension)
+                    if (it.sequence.instanceOf(Requirement)){
+                        createExtensionOrder((Requirement)it.sequence, extension)
+                    }
                 }
 
             }

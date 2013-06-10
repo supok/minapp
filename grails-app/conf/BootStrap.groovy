@@ -20,7 +20,6 @@ class BootStrap {
              */
             if (System.getProperty('mysqldb')) {
                 println "LOADING DEVELOPEMENT MYSQL DATABASE"
-                new DomainLoader().loadUsers()
             }else{
                 // Comment the following lines if you do not want to load initial data in database
                 // every time server starts up
@@ -28,6 +27,8 @@ class BootStrap {
                 new DomainLoader().loadUsers()
                 new DomainLoader().loadData()
             }
+        } else if (Environment.getCurrent().name == 'standalone'){
+
         }
 
     }
